@@ -32,6 +32,14 @@
                                         <span class="text-muted"><del>{{ deal.prixInitial|number_format(2, ',', ' ') }} €</del></span>
                                         <span class="text-danger">{{ deal.prixReduit|number_format(2, ',', ' ') }} €</span>
                                     </p>
+                                    <p class="card-text">
+                                        <strong>Catégorie :</strong>
+                                        <a href="#" onclick="showCategories({{ deal.id }}); return false;">
+                                            {% for categorie in deal.categories %}
+                                                <span class="badge bg-secondary text-dark">{{ categorie.nomCategorie }}</span>
+                                            {% endfor %}
+                                        </a>
+                                    </p>
                                     <p class="card-text"><small class="text-muted">{{ deal.datePublication|date('Y-m-d') }}</small></p>
                                     <p class="card-text">
                                         {% if deal.livraison == 'gratuite' %}
@@ -44,6 +52,8 @@
                                     </p>
                                     <a href="{{ deal.lien }}" class="btn btn-primary btn-sm" target="_blank">Voir le deal</a>
                                     <a href="{{ path('deal_edit', {id: deal.id}) }}" class="btn btn-primary btn-sm rounded-pill">Modifier</a>
+                                    <!-- Ajout du bouton Afficher -->
+                                    <a href="{{ path('deal_show', {id: deal.id}) }}" class="btn btn-secondary btn-sm rounded-pill">Afficher</a>
                                 </div>
                             </div>
                         </div>

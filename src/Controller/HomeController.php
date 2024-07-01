@@ -1,31 +1,39 @@
 <?php
 
-
 namespace App\Controller;
 
 use App\Entity\Deal;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use App\Entity\Categorie;
+use App\Repository\DealRepository;
+use App\Repository\CategorieRepository;
+use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Doctrine\ORM\EntityManagerInterface; // Importez EntityManagerInterface
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class HomeController extends AbstractController
 {
-    private EntityManagerInterface $entityManager;
+    private ManagerRegistry $managerRegistry;
 
-    public function __construct(EntityManagerInterface $entityManager)
+    public function __construct(ManagerRegistry $managerRegistry)
     {
-        $this->entityManager = $entityManager;
+        $this->managerRegistry = $managerRegistry;
     }
 
     #[Route('/', name: 'app_home')]
     public function index(): Response
     {
-        $dealRepository = $this->entityManager->getRepository(Deal::class);
-        $deals = $dealRepository->findDealsAscending();
+        // Recuperation de ManagerRegistry pour récupérer le repository
+        $dealRepository = $this->managerRegistry->getRepository(Deal::class);
+        $deals = $dealRepository->findAll();
+
+        // Récupérer les catégories de la même manière
+        $categorieRepository = $this->managerRegistry->getRepository(Categorie::class);
+        $categories = $categorieRepository->findAll();
 
         return $this->render('home/index.html.twig', [
             'deals' => $deals,
+            'categories' => $categories,
         ]);
     }
 }

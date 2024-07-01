@@ -2,6 +2,9 @@
 
 {% block body %}
     <div class="container my-5">
+        <h1>Liste des Deals</h1>
+
+        {# Affichage des messages flash ici s'il y en a #}
         {% for label, messages in app.flashes %}
             <div class="alert alert-{{ label }}">
                 {% for message in messages %}
@@ -30,7 +33,15 @@
                                         <span class="text-muted"><del>{{ deal.prixInitial|number_format(2, ',', ' ') }} €</del></span>
                                         <span class="text-danger">{{ deal.prixReduit|number_format(2, ',', ' ') }} €</span>
                                     </p>
-                                   <p class="card-text"><small class="text-muted">{{ deal.datePublication|date('Y-m-d') }}</small></p>
+                                    <p class="card-text"><small class="text-muted">{{ deal.datePublication|date('Y-m-d') }}</small></p>
+                                    <p class="card-text">
+                                        <strong>Catégorie :</strong>
+                                        <a href="#" onclick="showCategories({{ deal.id }}); return false;">
+                                            {% for categorie in deal.categories %}
+                                                <span class="badge bg-secondary text-dark">{{ categorie.nomCategorie }}</span>
+                                            {% endfor %}
+                                        </a>
+                                    </p>
                                     <p class="card-text">
                                         {% if deal.livraison == 'gratuite' %}
                                             Livraison : <span class="text-success">Gratuite</span>
@@ -40,7 +51,7 @@
                                             Livraison : <span class="text-muted">Non spécifiée</span>
                                         {% endif %}
                                     </p>
-                                    <a href="{{ deal.lien }}" class="btn btn-primary btn-sm rounded-pill" target="_blank">Voir le deal</a>
+                                    <a href="{{ deal.lien }}" class="btn btn-primary btn-sm" target="_blank">Voir le deal</a>
                                 </div>
                             </div>
                         </div>

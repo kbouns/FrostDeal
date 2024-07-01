@@ -3,8 +3,10 @@
 namespace App\Form;
 
 use App\Entity\Deal;
+use App\Entity\Categorie;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Validator\Constraints\File;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
@@ -50,6 +52,14 @@ class DealType extends AbstractType
                     'Livraison payante' => 'payante',
                 ],
                 'placeholder' => 'Choisissez une option de livraison',
+                'attr' => ['class' => 'form-select'] // Ajout de la classe Bootstrap form-select
+            ])
+            ->add('categories', EntityType::class, [
+                'class' => Categorie::class,
+                'choice_label' => 'nomCategorie',
+                'placeholder' => 'Choisissez une ou plusieurs catégories',
+                'multiple' => true, // Permettre la sélection multiple
+                'expanded' => true, // Utiliser une liste déroulante
                 'attr' => ['class' => 'form-select'] // Ajout de la classe Bootstrap form-select
             ]);
     }
