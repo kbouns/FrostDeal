@@ -27,8 +27,12 @@
                             </div>
                             <div class="col-md-8">
                                 <div class="card-body">
-                                    <h5 class="card-title">{{ deal.titre }}</h5>
-                                    <p class="card-text">{{ deal.description }}</p>
+                                    <h5 class="card-title">
+                                        <a href="{{ path('deal_show', {id: deal.id}) }}" class="text-decoration-none text-dark">{{ deal.titre }}</a>
+                                    </h5>
+                                    <p class="card-text">
+                                        <a href="{{ path('deal_show', {id: deal.id}) }}" class="text-decoration-none text-dark">{{ deal.description }}</a>
+                                    </p>
                                     <p class="card-text">
                                         <span class="text-muted"><del>{{ deal.prixInitial|number_format(2, ',', ' ') }} €</del></span>
                                         <span class="text-danger">{{ deal.prixReduit|number_format(2, ',', ' ') }} €</span>
@@ -52,6 +56,7 @@
                                         {% endif %}
                                     </p>
                                     <a href="{{ deal.lien }}" class="btn btn-primary btn-sm" target="_blank">Voir le deal</a>
+                                    <a href="{{ path('deal_show', {id: deal.id}) }}" class="btn btn-primary btn-sm rounded-pill">Détails</a>
                                 </div>
                             </div>
                         </div>
