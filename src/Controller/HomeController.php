@@ -29,7 +29,7 @@ class HomeController extends AbstractController
 
         // Récupérer les catégories de la même manière
         $categorieRepository = $this->managerRegistry->getRepository(Categorie::class);
-        $categories = $categorieRepository->findAll();
+        $categories = $categorieRepository->findby(['categories' => null]);
 
         return $this->render('home/index.html.twig', [
             'deals' => $deals,
