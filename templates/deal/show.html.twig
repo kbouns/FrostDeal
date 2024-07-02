@@ -4,7 +4,6 @@
     <div class="container my-5">
         <div class="row">
             <div class="col-md-12">
-                <h1>{{ deal.titre }}</h1>
                 <div class="card mb-4">
                     <div class="row no-gutters">
                         <div class="col-md-6">
@@ -17,7 +16,6 @@
                         <div class="col-md-6">
                             <div class="card-body">
                                 <h5 class="card-title">{{ deal.titre }}</h5>
-                                <p class="card-text">{{ deal.description }}</p>
                                 <p class="card-text">
                                     <span class="text-muted"><del>{{ deal.prixInitial|number_format(2, ',', ' ') }} €</del></span>
                                     <span class="text-danger">{{ deal.prixReduit|number_format(2, ',', ' ') }} €</span>
@@ -38,10 +36,22 @@
                                         Livraison : <span class="text-muted">Non spécifiée</span>
                                     {% endif %}
                                 </p>
-                                <a href="{{ deal.lien }}" class="btn btn-primary btn-sm" target="_blank">Voir le deal</a>
-                                <a href="{{ path('deal_edit', {id: deal.id}) }}" class="btn btn-primary btn-sm rounded-pill">Modifier</a>
+                                    <a href="{{ deal.lien }}" class="btn btn-primary btn-sm" target="_blank">Voir le deal</a>
                             </div>
                         </div>
+                    </div>
+                </div>
+                <div class="card mb-4">
+                    <div class="card-body">
+                        <h5 class="card-title">À propos de ce deal :</h5>
+                        <p class="card-text" style="text-align: left;">{{ deal.description }}</p>
+                    </div>
+                </div>
+                <div class="card mb-4">
+                    <div class="card-body">
+                        <h5 class="card-title">Commentaires</h5>
+                        {# Section de commentaires, peut être dynamique selon les besoins #}
+                        <p class="card-text text-left">Aucun commentaire pour le moment.</p>
                     </div>
                 </div>
                 <a href="{{ path('deal_index') }}" class="btn btn-secondary mt-3">Retour à la liste</a>

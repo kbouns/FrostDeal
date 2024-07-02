@@ -3,6 +3,7 @@
 // src/Controller/DealController.php
 namespace App\Controller;
 
+use App\Entity\Categorie;
 use App\Entity\Deal;
 use App\Form\DealType;
 use App\Repository\DealRepository;

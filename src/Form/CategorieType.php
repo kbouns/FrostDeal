@@ -16,7 +16,9 @@ class CategorieType extends AbstractType
             ->add('nomCategorie')
             ->add('categories', EntityType::class, [
                 'class' => Categorie::class,
-                'choice_label' => 'id',
+                'choice_label' => 'nomCategorie',
+                'required' => false,
+                'placeholder' => 'Aucune catégorie', // Ajoutez une option vide
             ])
         ;
     }

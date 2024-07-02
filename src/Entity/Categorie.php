@@ -23,7 +23,6 @@ class Categorie
     {
         return $this->id;
     }
-
     public function getNomCategorie(): ?string
     {
         return $this->nomCategorie;
