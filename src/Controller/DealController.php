@@ -22,7 +22,7 @@ class DealController extends AbstractController
     public function index(DealRepository $dealRepository, CategorieRepository $categorieRepository): Response
     {
         $deals = $dealRepository->findAll();
-        $categories = $categorieRepository->findAll();
+        $categories = $categorieRepository->findby(['categories' => null]);
 
         return $this->render('deal/index.html.twig', [
             'deals' => $deals,
