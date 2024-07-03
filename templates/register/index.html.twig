@@ -1,0 +1,45 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Utilisateur index{% endblock %}
+
+{% block body %}
+    <h1>Utilisateur index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>AvatarFilename</th>
+                <th>Nom</th>
+                <th>Prenom</th>
+                <th>Email</th>
+                <th>Motdepasse</th>
+                <th>DateInscription</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for utilisateur in utilisateurs %}
+            <tr>
+                <td>{{ utilisateur.id }}</td>
+                <td>{{ utilisateur.avatarFilename }}</td>
+                <td>{{ utilisateur.Nom }}</td>
+                <td>{{ utilisateur.prenom }}</td>
+                <td>{{ utilisateur.email }}</td>
+                <td>{{ utilisateur.Motdepasse }}</td>
+                <td>{{ utilisateur.DateInscription ? utilisateur.DateInscription|date('Y-m-d H:i:s') : '' }}</td>
+                <td>
+                    <a href="{{ path('app_register_show', {'id': utilisateur.id}) }}">show</a>
+                    <a href="{{ path('app_register_edit', {'id': utilisateur.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="8">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_register_new') }}">Create new</a>
+{% endblock %}
