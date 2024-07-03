@@ -29,9 +29,6 @@ class CategorieController extends AbstractController
         $form = $this->createForm(CategorieType::class, $categorie);
         $form->handleRequest($request);
     
-        // Instanciation de la variable $categories
-        $categories = [];
-    
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager->persist($categorie);
             $entityManager->flush();
@@ -42,17 +39,14 @@ class CategorieController extends AbstractController
         return $this->render('categorie/new.html.twig', [
             'categorie' => $categorie,
             'form' => $form->createView(),
-            'categories' => $categories, // Passer la variable $categories au template
         ]);
     }
 
     #[Route('/{id}', name: 'app_categorie_show', methods: ['GET'])]
     public function show(Categorie $categorie): Response
     {
-        $categories = [];
         return $this->render('categorie/show.html.twig', [
             'categorie' => $categorie,
-            'categories' => $categories,
         ]);
     }
 
@@ -61,9 +55,6 @@ class CategorieController extends AbstractController
     {
         $form = $this->createForm(CategorieType::class, $categorie);
         $form->handleRequest($request);
-    
-        // Instanciation de la variable $categories
-        $categories = [];
     
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager->flush();
@@ -74,20 +65,19 @@ class CategorieController extends AbstractController
         return $this->render('categorie/edit.html.twig', [
             'categorie' => $categorie,
             'form' => $form->createView(),
-            'categories' => $categories, // Passer la variable $categories au template
         ]);
     }
     
 
     #[Route('/{id}', name: 'app_categorie_delete', methods: ['POST'])]
-public function delete(Request $request, Categorie $categorie, EntityManagerInterface $entityManager): Response
-{
-    if ($this->isCsrfTokenValid('delete'.$categorie->getId(), $request->request->get('_token'))) {
-        $entityManager->remove($categorie);
-        $entityManager->flush();
-    }
+    public function delete(Request $request, Categorie $categorie, EntityManagerInterface $entityManager): Response
+    {
+        if ($this->isCsrfTokenValid('delete'.$categorie->getId(), $request->request->get('_token'))) {
+            $entityManager->remove($categorie);
+            $entityManager->flush();
+        }
 
-    return $this->redirectToRoute('app_categorie_index', [], Response::HTTP_SEE_OTHER);
-}
+        return $this->redirectToRoute('app_categorie_index', [], Response::HTTP_SEE_OTHER);
+    }
 
 }

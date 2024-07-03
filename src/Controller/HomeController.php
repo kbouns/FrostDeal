@@ -27,13 +27,8 @@ class HomeController extends AbstractController
         $dealRepository = $this->managerRegistry->getRepository(Deal::class);
         $deals = $dealRepository->findAll();
 
-        // Récupérer les catégories de la même manière
-        $categorieRepository = $this->managerRegistry->getRepository(Categorie::class);
-        $categories = $categorieRepository->findby(['categories' => null]);
-
         return $this->render('home/index.html.twig', [
             'deals' => $deals,
-            'categories' => $categories,
         ]);
     }
 }

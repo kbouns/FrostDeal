@@ -1,13 +1,10 @@
 <?php
 
-// src/Controller/DealController.php
 namespace App\Controller;
 
-use App\Entity\Categorie;
 use App\Entity\Deal;
 use App\Form\DealType;
 use App\Repository\DealRepository;
-use App\Repository\CategorieRepository; 
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
@@ -19,25 +16,20 @@ use Symfony\Component\String\Slugger\SluggerInterface;
 class DealController extends AbstractController
 {
     #[Route('/deal', name: 'deal_index', methods: ['GET'])]
-    public function index(DealRepository $dealRepository, CategorieRepository $categorieRepository): Response
+    public function index(DealRepository $dealRepository): Response
     {
         $deals = $dealRepository->findAll();
-        $categories = $categorieRepository->findby(['categories' => null]);
 
         return $this->render('deal/index.html.twig', [
             'deals' => $deals,
-            'categories' => $categories,
         ]);
     }
 
     #[Route('/deal/new', name: 'deal_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, EntityManagerInterface $entityManager, SluggerInterface $slugger, CategorieRepository $categorieRepository): Response
+    public function new(Request $request, EntityManagerInterface $entityManager, SluggerInterface $slugger): Response
     {
         $deal = new Deal();
         $form = $this->createForm(DealType::class, $deal);
-
-        // Récupérer toutes les catégories disponibles
-        $categories = $categorieRepository->findAll();
 
         $form->handleRequest($request);
 
@@ -57,13 +49,8 @@ class DealController extends AbstractController
                     $deal->setImageFilename($newFilename);
                     $this->addFlash('success', "L'image a été enregistrée.");
                 } catch (FileException $e) {
-                    $this->addFlash('Mince alors !', "Problème lors de l'enregistrement de l'image.");
+                    $this->addFlash('error', "Problème lors de l'enregistrement de l'image.");
                 }
-            }
-
-            // Associer les catégories sélectionnées au deal
-            foreach ($form->get('categories')->getData() as $categorie) {
-                $deal->addCategorie($categorie);
             }
 
             $entityManager->persist($deal);
@@ -77,27 +64,21 @@ class DealController extends AbstractController
         return $this->render('deal/new.html.twig', [
             'deal' => $deal,
             'form' => $form->createView(),
-            'categories' => $categories, // Passer les catégories au template Twig
         ]);
     }
 
     #[Route('/deal/{id}', name: 'deal_show', methods: ['GET'])]
-    public function show(Deal $deal,CategorieRepository $categorieRepository): Response
+    public function show(Deal $deal): Response
     {
-        $categories = $categorieRepository->findAll();
         return $this->render('deal/show.html.twig', [
-            'deal' => $deal,   
-            'categories' => $categories, 
+            'deal' => $deal,
         ]);
     }
 
     #[Route('/deal/{id}/edit', name: 'deal_edit', methods: ['GET', 'POST'])]
-    public function edit(Request $request, Deal $deal, EntityManagerInterface $entityManager, SluggerInterface $slugger, CategorieRepository $categorieRepository): Response
+    public function edit(Request $request, Deal $deal, EntityManagerInterface $entityManager, SluggerInterface $slugger): Response
     {
         $form = $this->createForm(DealType::class, $deal);
-
-        // Récupérer toutes les catégories disponibles
-        $categories = $categorieRepository->findAll();
 
         $form->handleRequest($request);
 
@@ -117,13 +98,8 @@ class DealController extends AbstractController
                     $deal->setImageFilename($newFilename);
                     $this->addFlash('success', "L'image a été enregistrée.");
                 } catch (FileException $e) {
-                    $this->addFlash('Mince alors !', "Problème lors de l'enregistrement de l'image.");
+                    $this->addFlash('error', "Problème lors de l'enregistrement de l'image.");
                 }
-            }
-
-            // Associer les catégories sélectionnées au deal
-            foreach ($form->get('categories')->getData() as $categorie) {
-                $deal->addCategory($categorie);
             }
 
             $entityManager->flush();
@@ -136,7 +112,6 @@ class DealController extends AbstractController
         return $this->render('deal/edit.html.twig', [
             'deal' => $deal,
             'form' => $form->createView(),
-            'categories' => $categories, // Passer les catégories au template Twig
         ]);
     }
 }

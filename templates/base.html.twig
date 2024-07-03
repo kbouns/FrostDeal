@@ -25,8 +25,8 @@
                             Catégories
                         </a>
                         <div class="dropdown-menu" aria-labelledby="categoriesDropdown">
-                         {% for categorie in categories %}
-                                <a class="dropdown-item" href="#">{{ categorie.nomCategorie }}</a>
+                         {% for category in category_service.get1stLevelCategories() %}
+                                <a class="dropdown-item" href="#">{{ category.nomCategorie }}</a>
                             {% endfor %}
                         </div>
                     </li>

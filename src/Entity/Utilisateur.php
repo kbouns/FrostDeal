@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use Symfony\Component\Security\Core\User\UserInterface;
 use App\Repository\UtilisateurRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -9,7 +10,7 @@ use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: UtilisateurRepository::class)]
-class Utilisateur
+class Utilisateur implements UserInterface
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -148,7 +149,6 @@ class Utilisateur
         return $this;
     }
 
-
     public function getVote(): ?Vote
     {
         return $this->vote;
@@ -249,5 +249,27 @@ class Utilisateur
         }
 
         return $this;
+    }
+
+    // Implémentation des méthodes de UserInterface
+
+    public function getRoles(): array
+    {
+        // Définissez ici les rôles de l'utilisateur.
+        // Par exemple, ['ROLE_USER'] ou ['ROLE_ADMIN'].
+        return ['ROLE_USER'];
+    }
+
+    public function eraseCredentials() : void
+    {
+        // Méthode appelée après l'authentification pour effacer les informations sensibles
+        // qui pourraient avoir été stockées.
+    }
+
+    public function getUserIdentifier(): string
+    {
+        // Retourne l'identifiant unique de l'utilisateur.
+        // Dans votre cas, cela pourrait être l'email ou un autre identifiant unique.
+        return $this->email;
     }
 }
