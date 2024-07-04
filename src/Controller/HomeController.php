@@ -23,7 +23,6 @@ class HomeController extends AbstractController
     #[Route('/', name: 'app_home')]
     public function index(): Response
     {
-        // Recuperation de ManagerRegistry pour récupérer le repository
         $dealRepository = $this->managerRegistry->getRepository(Deal::class);
         $deals = $dealRepository->findAll();
 

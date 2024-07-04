@@ -18,7 +18,7 @@ class CategorieType extends AbstractType
                 'class' => Categorie::class,
                 'choice_label' => 'nomCategorie',
                 'required' => false,
-                'placeholder' => 'Aucune catégorie', // Ajoutez une option vide
+                'placeholder' => 'Aucune catégorie', 
             ])
         ;
     }

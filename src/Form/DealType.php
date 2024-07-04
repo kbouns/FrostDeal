@@ -52,15 +52,15 @@ class DealType extends AbstractType
                     'Livraison payante' => 'payante',
                 ],
                 'placeholder' => 'Choisissez une option de livraison',
-                'attr' => ['class' => 'form-select'] // Ajout de la classe Bootstrap form-select
+                'attr' => ['class' => 'form-select'] 
             ])
             ->add('categories', EntityType::class, [
                 'class' => Categorie::class,
                 'choice_label' => 'nomCategorie',
                 'placeholder' => 'Choisissez une ou plusieurs catégories',
-                'multiple' => true, // Permettre la sélection multiple
-                'expanded' => true, // Utiliser une liste déroulante
-                'attr' => ['class' => 'form-select'] // Ajout de la classe Bootstrap form-select
+                'multiple' => true,
+                'expanded' => true, 
+                'attr' => ['class' => 'form-select'] 
             ]);
     }
 
